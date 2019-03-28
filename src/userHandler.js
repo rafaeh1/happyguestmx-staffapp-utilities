@@ -47,7 +47,7 @@ async function findUserInDB(sub) {
 async function finUserInAdminUsers(uuid, fields = []) {
     try {
         let params = {
-            TableName: env.DBB_ADMIN_USERS_TABLE,
+            TableName: env.DDB_ADMIN_USERS_TABLE,
             IndexName: 'uuid-index',
             KeyConditionExpression: '#uuid = :uuid',
             ExpressionAttributeValues: {
@@ -90,10 +90,13 @@ async function finUserInCoStaffUsers(sub) {
     try {
         const params = {
             TableName: env.DDB_CO_STAFF_USERS_TABLE,
+            ProjectionExpression: 'company_uuid, #name, email, #uuid, #status, last_name, role_key, enabled',
             KeyConditionExpression: '#uuid = :uuid',
             IndexName: 'uuid-index',
             ExpressionAttributeNames: {
-                '#uuid': 'uuid'
+                '#uuid': 'uuid',
+                '#name': 'name',
+                '#status': 'status'
             },
             ExpressionAttributeValues: {
                 ':uuid': sub
