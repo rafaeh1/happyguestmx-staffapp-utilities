@@ -57,7 +57,6 @@ async function finUserInAdminUsers(uuid, fields = []) {
                 '#uuid': 'uuid'
             }
         };
-        console.log('params: ', params);
         if (fields.length > 0) {
             params = await pushParamstoObject(fields, params);
         }
@@ -90,7 +89,7 @@ async function finUserInCoStaffUsers(sub) {
     try {
         const params = {
             TableName: env.DDB_CO_STAFF_USERS_TABLE,
-            ProjectionExpression: 'company_uuid, #name, email, #uuid, #status, last_name, role_key, enabled, hotel_uuid',
+            ProjectionExpression: 'company_uuid, #name, email, #uuid, #status, last_name, role_key, enabled, hotel_uuid, notifications, locale, picture',
             KeyConditionExpression: '#uuid = :uuid',
             IndexName: 'uuid-index',
             ExpressionAttributeNames: {
